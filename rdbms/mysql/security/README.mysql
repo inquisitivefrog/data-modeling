@@ -1,0 +1,40 @@
+NOTE: follow README.docker first
+
+MySQL is a headache!
+
+History
+1) MySQL was a free alternative to Oracle, MSSQL, DB2
+2) Sun MicroSystems bought MySQL to stay relevant when SPARC chips lost out to Intel
+3) Oracle bought Sun MicroSystems then canceled future development of MySQL features
+4) Python libraries sometimes work then sometimes don't
+5) Anyone who is anyone has switched from MySQL to PostGreSQL
+
+In 2017, my Python tests worked properly using pip libraries
+MySQL-python==1.2.5
+mysql-connector-python-cext==2.1.6
+
+I believe that I had to build one from source on MacOS X but lost it when my laptop was stolen.
+
+In 2018, my Python tests must use pip libraries so require a rewrite
+mysql-connector-python==8.0.11
+
+Consult here for recommended changes
+https://dev.mysql.com/doc/connector-python/en/connector-python-examples.html
+
+DATABASE CREATION
+Choice A: install mysql on MacOS X then use mysql --host=VM_Container --user=root --password=XXX script.sql
+
+Choice B: embed SQL in Python and use pip library to access
+
+(datastore) $ docker-machine ip dev
+192.168.99.100
+(datastore) $ python
+>>> host='192.168.99.100'
+>>> import mysql.connector
+>>> cnx = mysql.connector.connect(host=host, user='friend', password='pokemon8', database='sample')
+>>> curA = cnx.cursor(buffered=True)
+>>> query = 'CREATE TABLE data(id INT NOT NULL AUTO_INCREMENT, name VARCHAR(20), PRIMARY KEY (id));' 
+>>> curA.execute(query)
+>>> cnx.commit()
+>>> cnx.close()
+>>> quit()

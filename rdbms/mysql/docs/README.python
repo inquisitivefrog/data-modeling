@@ -1,0 +1,6 @@
+$ virtualenv datastore
+$ source datastore/bin/activate
+(datastore) $ curl https://bootstrap.pypa.io/get-pip.py | python
+(datastore) $ cd ~/Documents/workspace/python2/data-store-review/rdbms/mysql
+(datastore) $ pip install -r requirements.txt
+(datastore) 

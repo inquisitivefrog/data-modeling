@@ -1,0 +1,28 @@
+
+START MySQL container and enable authentication from VM
+$ docker-machine ssh dev
+docker@dev:~$ docker pull squashedelephant/mysql:develop
+docker@dev:~$ docker run --name mysql -e MYSQL_ROOT_PASSWORD=tim -d squashedelephant/mysql:develop
+docker@dev:~$ docker ps
+docker@dev:~$ docker stop mysql
+docker@dev:~$ docker start mysql
+docker@dev:~$ docker exec -it mysql /bin/bash
+root@ceca0e232cf8:/# mysql --user=root --password=tim
+mysql> CREATE DATABASE sample;
+mysql> CREATE USER friend;
+mysql> GRANT ALL ON sample.* TO 'friend'@'%' IDENTIFIED BY 'pokemon8';
+mysql> exit;
+root@ceca0e232cf8:/# mysql --user=friend --password=pokemon8 --database=sample
+mysql> exit;
+root@ceca0e232cf8:/# exit
+
+BACKUP MySQL database from VM
+docker@dev:~$ docker exec mysql sh -c 'exec mysqldump --user=friend --password=pokemon8 sam
+ple' > sample_db.sql
+
+NOTE: unclear how to utilize the additional docker container environmental variables:
+1) MYSQL_ROOT_PASSWORD
+2) MYSQL_ROOT_HOST
+3) MYSQL_DATABASE
+4) MYSQL_USER
+5) MYSQL_PASSWORD
