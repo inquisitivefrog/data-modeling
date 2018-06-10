@@ -1,0 +1,38 @@
+PostGres is an RDBMS so performance tuning has many many knobs
+
+Hardware
+1) RAID 10 disk arrays
+2) Disks distributed across controllers
+3) RAID Cache
+
+Operating System
+1) Filesystem Snapshots
+2) Regular backups
+
+Database
+1) Master, Slave configuration
+2) data, indices, log on separate disks
+3) pinned small tables
+4) properly ordered big tables
+5) indexed big tables
+6) partitioned big tables
+7) PostGres search and sort table
+8) PostGres temperary table
+9) PostGres table, row, page, advisory locking
+
+Application
+1) denormalizing data
+2) obtain an explain plan using EXPLAIN query
+3) analyze query using ANALYZE query
+4) do both with EXPLAIN ANALYZE query
+
+For additional reference, look here: 
+1) https://www.postgresql.org/docs/9.1/static/sql-explain.html
+2) https://www.postgresql.org/docs/9.1/static/sql-analyze.html
+3) https://www.postgresql.org/docs/9.4/static/explicit-locking.html
+4) https://www.amazon.com/PostgreSQL-9-6-High-Performance-configuration/dp/1784392979/ref=sr_1_1?s=books&ie=UTF8&qid=1528592776&sr=1-1&keywords=postgresql+performance+tuning
+5) https://robots.thoughtbot.com/reading-an-explain-analyze-query-plan
+6) https://robots.thoughtbot.com/advanced-postgres-performance-tips
+7) https://www.compose.com/articles/common-misconceptions-about-locking-in-postgresql/
+
+NOTE: I have not had to think about this in detail since 2010 at nCircle Network Security

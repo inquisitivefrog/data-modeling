@@ -1,8 +1,16 @@
 
 START MySQL container and enable authentication from VM
+(datastore) $ docker-machine env dev
+export DOCKER_TLS_VERIFY="1"
+export DOCKER_HOST="tcp://192.168.99.100:2376"
+export DOCKER_CERT_PATH="/Users/tim/.docker/machine/machines/dev"
+export DOCKER_MACHINE_NAME="dev"
+# Run this command to configure your shell:
+# eval $(docker-machine env dev)
+(datastore) $ eval $(docker-machine env dev)
 $ docker-machine ssh dev
 docker@dev:~$ docker pull squashedelephant/mysql:develop
-docker@dev:~$ docker run --name mysql -e MYSQL_ROOT_PASSWORD=tim -d squashedelephant/mysql:develop
+docker@dev:~$ docker run --name mysql --publish 3306:3306 -e MYSQL_ROOT_PASSWORD=tim -d squashedelephant/mysql:develop
 docker@dev:~$ docker ps
 docker@dev:~$ docker stop mysql
 docker@dev:~$ docker start mysql

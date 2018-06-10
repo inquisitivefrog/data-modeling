@@ -38,3 +38,11 @@ Choice B: embed SQL in Python and use pip library to access
 >>> cnx.commit()
 >>> cnx.close()
 >>> quit()
+
+DATABASE CONFIG
+$ docker-machine ssh dev
+docker@dev:~$ docker exec -it mysql /bin/bash
+root@5058ff11a964:/# ls -l /etc/mysql/my.cnf
+
+NOTE: copy critical details from this file to $HOME/.ssh/my.cnf
+

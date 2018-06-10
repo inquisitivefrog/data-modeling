@@ -1,0 +1,38 @@
+MySQL is an RDBMS so performance tuning has many many knobs
+
+Hardware
+1) RAID 10 disk arrays
+2) Disks distributed across controllers
+3) RAID Cache
+
+Operating System
+1) Filesystem Snapshots
+2) Regular backups
+
+Database
+1) Master, Slave configuration
+2) data, indices, log on separate disks
+3) pinned small tables
+4) properly ordered big tables
+5) indexed big tables
+6) partitioned big tables
+7) MySQL search and sort table
+8) MySQL temperary table
+9) MySQL table, row, page, advisory locking
+
+Application
+1) denormalizing data
+2) obtain an explain plan using EXPLAIN query
+3) analyze query using ANALYZE query
+4) do both with EXPLAIN ANALYZE query
+
+For additional reference, look here: 
+1) https://dev.mysql.com/doc/refman/8.0/en/optimize-overview.htmlk
+2) https://dev.mysql.com/doc/refman/5.5/en/execution-plan-information.html
+3) https://www.sitepoint.com/using-explain-to-write-better-mysql-queries/
+4) https://dev.mysql.com/doc/refman/8.0/en/analyze-table.html
+5) https://dba.stackexchange.com/questions/35520/what-is-the-difference-between-optimize-table-and-analyze-table-in-mysql
+6) https://www.amazon.com/High-Performance-MySQL-Optimization-Replication/dp/1449314287/ref=sr_1_1?ie=UTF8&qid=1528590344&sr=8-1&keywords=mysql+performance+tuning 
+7) https://use-the-index-luke.com/sql/explain-plan/mysql/getting-an-execution-plan
+
+NOTE: I have not had to think about this in detail since 2008 interview with the Australians and that MySQL RAM Cache card

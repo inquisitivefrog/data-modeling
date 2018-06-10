@@ -1,0 +1,32 @@
+START PostGres container and enable authentication from VM
+$ source datastore/bin/active
+(datastore) $ docker-machine env dev
+export DOCKER_TLS_VERIFY="1"
+export DOCKER_HOST="tcp://192.168.99.100:2376"
+export DOCKER_CERT_PATH="/Users/tim/.docker/machine/machines/dev"
+export DOCKER_MACHINE_NAME="dev"
+# Run this command to configure your shell:
+# eval $(docker-machine env dev)
+(datastore) $ eval $(docker-machine env dev)
+$ docker-machine ssh dev
+docker@dev:~$ docker pull squashedelephant/postgres:develop
+docker@dev:~$ docker run --name postgres --publish 5432:5432 -e POSTGRES_PASSWORD=tim -d squashedelephant/postgres:develop
+docker@dev:~$ docker ps
+docker@dev:~$ docker stop postgres
+docker@dev:~$ docker start postgres
+docker@dev:~$ docker exec -it postgres /bin/bash
+root@ceca0e232cf8:/# psql --port=5432 --username=postgres --password=tim
+postgres=# CREATE USER friend WITH PASSWORD 'pokemon8';
+postgres=# ALTER USER friend CREATEDB;
+postgres=# ALTER ROLE friend SET client_encoding TO 'utf8';
+postgres=# ALTER ROLE friend SET default_transaction_isolation TO 'read committed';
+postgres=# ALTER ROLE friend SET timezone TO 'UTC';
+postgres=# CREATE DATABASE sample owner friend;
+postgres=# GRANT ALL PRIVILEGES ON DATABASE sample TO friend;
+postgres=# \q
+root@ceca0e232cf8:/# psql --port=5432 --username=friend --database=sample
+postgres=# \q
+root@ceca0e232cf8:/# exit
+
+BACKUP PostGres database from VM
+docker@dev:~$ docker exec postgres sh -c 'exec pg_dump --username=friend --dbname=sample > sample_db.sql

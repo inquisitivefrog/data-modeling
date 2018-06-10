@@ -1,0 +1,43 @@
+NOTE: follow README.docker first
+
+PostGres is easy!
+
+History
+1) PostGres is a free alternative to MySQL
+4) Python libraries rely on pip library psycopg2
+5) Anyone who is anyone has switched from MySQL to PostGreSQL
+
+DATABASE CREATION
+Choice A: install postgres on MacOS X then use psql --host=VM_Container --port=5432 --username=postgres script.sql
+
+Choice B: embed SQL in Python and use pip library to access
+
+(datastore) $ docker-machine ip dev
+192.168.99.100
+(datastore) $ python
+>>> from psycopg2 import connect
+>>> host='192.168.99.100'
+>>> port=5432
+>>> dbname='sample'
+>>> user='postgres'
+>>> passwd='tim'
+>>> cnx = connect("dbname='{}' user='{}' password='{}' host='{}' port='{}'".format(dbname, user, passwd, host, port))
+>>> cur = cnx.cursor()
+>>> sql = """CREATE TABLE data(id SERIAL PRIMARY KEY, name VARCHAR(20) NOT NULL);"""
+>>> cur.execute(sql)
+>>> cur.close()
+>>> cnx.close()
+>>> quit()
+
+Further Help, consult here: https://wiki.postgresql.org/wiki/Psycopg2_Tutorial
+
+DATABASE CONFIG
+$ docker-machine ssh dev
+docker@dev:~$ docker exec -it postgres /bin/bash
+root@5058ff11a964:/# psql --username postgres
+postgres=# SHOW config_file;
+               config_file                
+------------------------------------------
+ /var/lib/postgresql/data/postgresql.conf
+
+NOTE: copy critical details from this file to $HOME/.ssh/postgresql.conf
